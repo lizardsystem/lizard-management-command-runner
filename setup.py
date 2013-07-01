@@ -10,9 +10,9 @@ long_description = '\n\n'.join([
 
 install_requires = [
     'Django',
-    'django-extensions',
     'django-nose',
-    'lizard-ui >= 4.0b5',
+    'django-celery',
+    'django-kombu',
     ],
 
 tests_require = [
@@ -23,15 +23,15 @@ tests_require = [
 
 setup(name='lizard-management-command-runner',
       version=version,
-      description="TODO",
+      description="Run management commands from a protected web page",
       long_description=long_description,
       # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Programming Language :: Python',
                    'Framework :: Django',
                    ],
       keywords=[],
-      author='TODO',
-      author_email='TODO@nelen-schuurmans.nl',
+      author='Remco Gerlich',
+      author_email='remco.gerlich@nelen-schuurmans.nl',
       url='',
       license='GPL',
       packages=['lizard_management_command_runner'],
