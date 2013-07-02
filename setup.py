@@ -13,12 +13,14 @@ install_requires = [
     'django-nose',
     'django-celery',
     'django-kombu',
+    'lizard-ui',
     ],
 
 tests_require = [
     'nose',
     'coverage',
     'mock',
+    'factory_boy',
     ]
 
 setup(name='lizard-management-command-runner',

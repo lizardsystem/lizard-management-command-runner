@@ -54,7 +54,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.gis',
     'django.contrib.sites',
+    # Celery
+    'djcelery',
+    'kombu.transport.django',
     ]
+
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = 'django://'
+
 ROOT_URLCONF = 'lizard_management_command_runner.urls'
 
 MIDDLEWARE_CLASSES = (

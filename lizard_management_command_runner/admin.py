@@ -8,4 +8,4 @@ from django.contrib import admin
 from lizard_management_command_runner import models
 
 
-# admin.site.register(models.TODO)
+admin.site.register(models.ManagementCommand)
