@@ -73,7 +73,8 @@ class ManagementCommand(models.Model):
         # Catch all errors
         try:
             with LogCapturer(buffer=log):
-                management.call_command(self.command, stdout=log, stderr=log)
+                management.call_command(
+                    self.command.encode('utf8'), stdout=log, stderr=log)
 
             # Finish
             self.finish(command_run, log, success=True)
@@ -134,7 +135,7 @@ class CommandRun(models.Model):
     captured_output = models.TextField()
 
     class Meta:
-        ordering = ('start_time',)
+        ordering = ('-start_time',)
 
     def __unicode__(self):
         return "Run of '{command}' at {time}".format(

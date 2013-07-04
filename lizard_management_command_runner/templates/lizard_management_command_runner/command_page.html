@@ -1,1 +1,35 @@
-Whee!
+{% extends "lizard_ui/lizardbase.html" %}
+
+{% block javascript %}
+  {{ block.super }}
+  <script src="{{ STATIC_URL }}lizard_management_command_runner/command_page.js"></script>
+{% endblock javascript %}
+
+{% block main-area %}
+<table class="table table-bordered">
+<thead>
+  <th width="100">Command</th>
+  <th width="100">Run</th>
+  <th>Latest runs</th>
+</thead>
+{% for command in view.commands %}
+  <tr>
+    <td>{{ command.description }}</td>
+    <td><button class="btn btn-primary commandrunner" data-command-url="{% url command_run_view command_id=command.id %}">{{ command.command }}</button></td>
+    <td>
+      <ul class="unstyled">
+      {% for run in command.latest_runs %}
+        <li>{% if run.success %}<i class="icon-ok-sign"></i> {% else %}<i class="icon-minus-sign"></i> {% endif %}{{ run.start_time }} door {{ run.started_by }}.
+        {% if run.finished %}
+        <a class="toggle-visibility" data-span-id="output-run-{{ run.id }}" href="">toon output</a>
+        <span id="output-run-{{ run.id }}" data-visible="0" style="display: none;"><pre>{{ run.captured_output }}</pre></span>
+        {% else %}(bezig)
+        {% endif %}
+        </li>
+      {% endfor %}
+      </ul>
+    </td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock main-area %}
