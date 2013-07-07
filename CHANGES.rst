@@ -2,7 +2,7 @@ Changelog of lizard-management-command-runner
 ===================================================
 
 
-0.1 (unreleased)
+0.1 (2013-07-07)
 ----------------
 
 - Initial project structure created with nensskel 1.34.dev0.
