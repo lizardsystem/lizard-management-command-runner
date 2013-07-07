@@ -2,6 +2,12 @@ Changelog of lizard-management-command-runner
 ===================================================
 
 
+0.2 (unreleased)
+----------------
+
+- Nothing changed yet.
+
+
 0.1 (2013-07-07)
 ----------------
 
