@@ -81,7 +81,14 @@ class ManagementCommand(models.Model):
 
         except Exception as e:
             # Log exception
-            log.write("Caught exception: {exception}\n".format(exception=e))
+            if hasattr(e, 'output'):
+                # CommandExceptions from subprocess (and
+                # import_helper) have the output so far in the output
+                # attribute
+                log.write(e.output)
+            else:
+                log.write(
+                    "Caught exception: {exception}\n".format(exception=e))
             self.finish(command_run, log, success=False)
 
     def finish(self, command_run, log, success):
@@ -147,3 +154,14 @@ class CommandRun(models.Model):
         return cls.objects.create(
             management_command=management_command,
             started_by=user.get_full_name())
+
+    @classmethod
+    def latest_runs(cls, user, n=5):
+        runs = [run for run in cls.objects.all().select_related()[:n]
+                if run.has_access(user)]
+        runs.reverse()  # Show newest last
+        return runs
+
+    def has_access(self, user):
+        return user.has_perm(
+            'lizard_management_command_runner.execute_managementcommand')
