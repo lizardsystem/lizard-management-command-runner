@@ -13,7 +13,7 @@ install_requires = [
     'django-nose',
     'django-celery',
     'django-kombu',
-    'lizard-ui',
+    # 'lizard-ui',  don't use lizard-ui, stuff is in blockbox already
     ],
 
 tests_require = [
