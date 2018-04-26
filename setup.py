@@ -11,7 +11,7 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-celery',
-    # 'lizard-ui',  don't use lizard-ui, stuff is in blockbox already
+    'lizard-ui',
     ],
 
 tests_require = [
