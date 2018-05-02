@@ -9,10 +9,8 @@ long_description = '\n\n'.join([
     ])
 
 install_requires = [
-    'Django',
-    'django-nose',
+    'Django >= 1.9, < 2',
     'django-celery',
-    'django-kombu',
     'lizard-ui',
     ],
 
@@ -21,6 +19,7 @@ tests_require = [
     'coverage',
     'mock',
     'factory_boy',
+    'django-nose',
     ]
 
 setup(name='lizard-management-command-runner',
