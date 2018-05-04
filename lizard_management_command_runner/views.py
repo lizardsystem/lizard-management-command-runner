@@ -13,6 +13,8 @@ from lizard_ui.views import UiView
 from lizard_management_command_runner import models
 from lizard_management_command_runner import tasks
 
+from django.contrib.auth.decorators import permission_required
+
 
 class CommandPageView(UiView):
     template_name = "lizard_management_command_runner/command_page.html"
@@ -24,16 +26,17 @@ class CommandPageView(UiView):
             ]
 
 
+def run_add(*args, **kwargs):
+    print(tasks.add.delay(1, 1))
+    return HttpResponse()
+
+
+@permission_required('lizard_management_command_runner.execute_managementcommand')
 def run_command(request, command_id):
     if request.method != "POST":
         return
 
-    try:
-        command = models.ManagementCommand.objects.get(pk=command_id)
-    except models.ManagementCommand.DoesNotExist:
-        return
-
-    tasks.run_management_command.delay(request.user, command)
+    tasks.run_management_command.delay(request.user.pk, command_id)
     return HttpResponse()
 
 
