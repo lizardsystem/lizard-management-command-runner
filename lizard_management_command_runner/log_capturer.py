@@ -30,6 +30,12 @@ class StringIOField(object):
             return getattr(self.stream, item)
 
     def write(self, *args, **kwargs):
-        self.stream.write(*args, **kwargs)
+        """
+        write(bytes) -> int.  Write bytes to file and save it to the field.
+
+        Return the number of bytes written.
+        """
+        return_value = self.stream.write(*args, **kwargs)
         setattr(self.obj, self.field, self.stream.getvalue().decode('utf-8'))
         self.obj.save()
+        return return_value
