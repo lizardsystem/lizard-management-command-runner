@@ -10,7 +10,7 @@ long_description = '\n\n'.join([
 
 install_requires = [
     'Django >= 1.9, < 2',
-    'django-celery',
+    'celery >= 4',
     'lizard-ui',
     ],
 

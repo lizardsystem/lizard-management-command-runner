@@ -11,7 +11,7 @@ from django.core import management
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from .log_capturer import LogCapturer
+from .log_capturer import StringIOField
 
 
 class ManagementCommand(models.Model):
@@ -68,17 +68,14 @@ class ManagementCommand(models.Model):
         # Create a CommandRun object
         command_run = CommandRun.create(self, user)
 
-        log = StringIO()
+        log = StringIOField(command_run, 'captured_output')
 
         # Catch all errors
+        success = False
         try:
-            with LogCapturer(buffer=log):
-                management.call_command(
-                    self.command.encode('utf8'), stdout=log, stderr=log)
-
-            # Finish
-            self.finish(command_run, log, success=True)
-
+            management.call_command(self.command.encode('utf8'),
+                                    stdout=log, stderr=log)
+            success = True
         except Exception as e:
             # Log exception
             if hasattr(e, 'output'):
@@ -89,11 +86,11 @@ class ManagementCommand(models.Model):
             else:
                 log.write(
                     "Caught exception: {exception}\n".format(exception=e))
-            self.finish(command_run, log, success=False)
+        finally:
+            # Always finish
+            self.finish(command_run, success=success)
 
-    def finish(self, command_run, log, success):
-        command_run.captured_output = log.getvalue()
-
+    def finish(self, command_run, success):
         command_run.finished = True
         command_run.success = success
         command_run.save()
@@ -151,9 +148,12 @@ class CommandRun(models.Model):
 
     @classmethod
     def create(cls, management_command, user):
+        username = user.get_full_name()
+        if not username:
+            username = user.username
         return cls.objects.create(
             management_command=management_command,
-            started_by=user.get_full_name())
+            started_by=username)
 
     @classmethod
     def latest_runs(cls, user, n=5):
