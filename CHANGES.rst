@@ -2,7 +2,7 @@ Changelog of lizard-management-command-runner
 ===================================================
 
 
-0.2 (unreleased)
+0.2 (2018-05-08)
 ----------------
 
 - Update to Django 1.11, Celery 4
