@@ -26,11 +26,6 @@ class CommandPageView(UiView):
             ]
 
 
-def run_add(*args, **kwargs):
-    print(tasks.add.delay(1, 1))
-    return HttpResponse()
-
-
 @permission_required('lizard_management_command_runner.execute_managementcommand')
 def run_command(request, command_id):
     if request.method != "POST":
