@@ -5,7 +5,11 @@ Changelog of lizard-management-command-runner
 0.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Update to Django 1.11, Celery 4
+
+- Regenerate migrations
+
+- Fix the live log capturer
 
 
 0.1 (2013-07-07)
