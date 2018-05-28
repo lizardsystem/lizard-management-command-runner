@@ -9,3 +9,4 @@ from lizard_management_command_runner import models
 
 
 admin.site.register(models.ManagementCommand)
+admin.site.register(models.CommandRun)
