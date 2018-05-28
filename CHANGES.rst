@@ -2,7 +2,7 @@ Changelog of lizard-management-command-runner
 ===================================================
 
 
-0.3 (unreleased)
+0.3 (2018-05-28)
 ----------------
 
 - Added CommandRun to admin.
